@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposta de Alinhamento e Operação — Éter Creative Experience</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --callout-bg: rgba(99, 102, 241, 0.1);
+      --callout-border: #6366f1;
+      --success: #10b981;
+      --warning: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--callout-bg);
+      color: var(--accent-hover);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    section {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+      margin: 20px 0 10px 0;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: var(--text-secondary);
+    }
+
+    li strong {
+      color: var(--text-primary);
+    }
+
+    .callout {
+      background-color: var(--callout-bg);
+      border-left: 4px solid var(--callout-border);
+      padding: 16px 20px;
+      border-radius: 4px 8px 8px 4px;
+      margin: 16px 0;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .callout strong {
+      color: var(--accent-hover);
+    }
+
+    .expenses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .expense-card {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .expense-card h4 {
+      font-size: 0.95rem;
+      color: var(--accent-hover);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .expense-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: rgba(255, 255, 255, 0.03);
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    td {
+      color: var(--text-secondary);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .highlight-row {
+      background-color: rgba(99, 102, 241, 0.05);
+    }
+
+    .highlight-row td {
+      color: var(--text-primary);
+    }
+
+    /* Simulator Styles */
+    .simulator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 16px;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .control-value {
+      color: var(--accent-hover);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--accent);
+      background: var(--bg-color);
+      height: 6px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .results-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .metric-item {
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .metric-item:last-child {
+      border-bottom: none;
+    }
+
+    .metric-name {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .metric-val {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .metric-val.highlight {
+      color: var(--success);
+      font-size: 1.25rem;
+    }
+
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .checklist input[type="checkbox"] {
+      margin-top: 5px;
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    @media (max-width: 768px) {
+      .simulator-grid {
+        grid-template-columns: 1fr;
+      }
+      body {
+        padding: 20px 12px;
+      }
+      section {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <span class="badge">Planejamento Estratégico</span>
+      <h1>Éter Creative Experience</h1>
+      <p class="subtitle">Proposta de Alinhamento Operacional, Modelo Financeiro e Estrutura Comercial</p>
+    </header>
+
+    <main>
+      <!-- SECTION 1 -->
+      <section>
+        <h2>1. Divisão de Papéis e Responsabilidades</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 16px;">
+          Para a operação rodar sem gargalos e garantir que todo mundo tenha uma remuneração previsível e justa, a divisão inicial de funções fica assim:
+        </p>
+        <ul>
+          <li><strong>Ulysses:</strong> Captação principal (Foto/Vídeo), Direção Audiovisual e apoio eventual em Edição.</li>
+          <li><strong>Pedro:</strong> Pós-produção principal (Edição/Color), Design/Identidade Visual e apoio em Captação.</li>
+          <li><strong>Eliab:</strong> Desenvolvimento Web/Landing Pages + Gestão de Tráfego Pago, Roteirização/Estratégia e Captação Ativa de Clientes.</li>
+          <li><strong>Ítalo:</strong> Roteirização/Storytelling + Gestão de Tráfego Pago, Estratégia e Captação Ativa de Clientes.</li>
+        </ul>
+
+        <div class="callout">
+          <strong>💡 Nota sobre Comercial & Tráfego (Eliab e Ítalo):</strong> Como as demandas puras de Web e Roteiro variam por projeto, o Eliab e o Ítalo encabeçam a frente de <strong>Tráfego Pago e Prospecção de Clientes</strong>.<br><br>
+          • <strong>Incentivo Comercial:</strong> Quem trouxer e fechar o contrato com um novo cliente terá uma participação/comissão direta sobre esse valor fechado, garantindo retorno financeiro contínuo e recorrente para a equipe.<br>
+          • <strong>Atendimento e Gestão Comercial:</strong> Vamos definir os detalhes finais de quem toca a linha de frente na reunião, mas a estrutura base já está traçada.
+        </div>
+      </section>
+
+      <!-- SECTION 2 -->
+      <section>
+        <h2>2. Modelo Financeiro Inicial & Reinvestimento no Caixa</h2>
+        <ul>
+          <li><strong>Equipamentos Iniciais:</strong> Começaremos operando com os equipamentos e estruturas individuais de cada sócio.</li>
+          <li><strong>Princípio de Crescimento & Escalonamento de Custos:</strong> Conforme a produtora ganha maturidade e o faturamento aumenta, os custos operacionais também sobem. Para não comprometer a saúde financeira da empresa nem os saques dos sócios no futuro, **reteremos uma porcentagem do faturamento** para o caixa da Éter.</li>
+        </ul>
+
+        <h3>Justificativa de Custos e Investimentos Essenciais</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 16px;">
+          O dinheiro retido pela empresa atende a demandas práticas de operação, segurança e aquisição de novos contratos:
+        </p>
+
+        <div class="expenses-grid">
+          <div class="expense-card">
+            <h4>💾 Armazenamento e Segurança</h4>
+            <p>Aquisição de SSDs NVMe externos de alta velocidade para fluxo de edição e HDDs/NAS para acervo bruto e redundância de backup dos materiais de clientes.</p>
+          </div>
+
+          <div class="expense-card">
+            <h4>💻 Assinaturas e Licenças</h4>
+            <p>PAGAMENTO do pacote <strong>Adobe Creative Cloud</strong> (compartilhável estrategicamente no início e com upgrade planejado conforme o time cresce), bancos de áudio/trilhas (Artlist) e ferramentas de gestão.</p>
+          </div>
+
+          <div class="expense-card">
+            <h4>📢 Marketing Próprio e Tráfego</h4>
+            <p>A Éter precisa ser seu próprio cliente. Investimento em tráfego pago (Meta Ads/Google Ads) para manter a esteira de prospecção do Eliab e Ítalo sempre ativa.</p>
+          </div>
+
+          <div class="expense-card">
+            <h4>🏢 Espaço Físico e Coworking</h4>
+            <p>Fundo para diárias de salas de reunião para fechamento de contratos de ticket alto e, no médio prazo, estruturação de um espaço/estúdio fixo para o time.</p>
+          </div>
+
+          <div class="expense-card">
+            <h4>⚡ Manutenção e Contingência</h4>
+            <p>Reserva rápida para troca de cabos, baterias extras, cartões de memória e imprevistos técnicos sem tirar dinheiro do bolso dos sócios.</p>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top: 20px;">
+          <strong>📌 Ponto para Discussão na Reunião:</strong> A porcentagem exata de retenção será debatida entre todos para encontrarmos um equilíbrio saudável entre o pró-labore do time e o ritmo de crescimento da produtora.
+        </div>
+      </section>
+
+      <!-- SIMULATOR SECTION -->
+      <section>
+        <h2>🧮 Simulador Operacional de Receita e Caixa</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 16px;">
+          Ajuste as variáveis abaixo para simular diferentes cenários de contratos ativos, retenção para o fundo da empresa e repasse para os 4 sócios em tempo real:
+        </p>
+
+        <div class="simulator-grid">
+          <div class="controls-col">
+            <div class="control-group">
+              <div class="control-label">
+                <span>Clientes Ativos</span>
+                <span class="control-value" id="clientsVal">6 clientes</span>
+              </div>
+              <input type="range" id="clientsInput" min="1" max="15" value="6" step="1">
+            </div>
+
+            <div class="control-group">
+              <div class="control-label">
+                <span>Ticket Médio Mensal</span>
+                <span class="control-value" id="ticketVal">R$ 3.500</span>
+              </div>
+              <input type="range" id="ticketInput" min="1500" max="10000" value="3500" step="250">
+            </div>
+
+            <div class="control-group">
+              <div class="control-label">
+                <span>Retenção Fundo Éter (Reinvestimento)</span>
+                <span class="control-value" id="retentionVal">15%</span>
+              </div>
+              <input type="range" id="retentionInput" min="5" max="30" value="15" step="1">
+            </div>
+
+            <div class="control-group">
+              <div class="control-label">
+                <span>Comissão de Prospecção (Comercial)</span>
+                <span class="control-value" id="commVal">10%</span>
+              </div>
+              <input type="range" id="commInput" min="0" max="20" value="10" step="1">
+            </div>
+          </div>
+
+          <div class="results-card">
+            <div class="metric-item">
+              <span class="metric-name">Faturamento Bruto Mensal</span>
+              <span class="metric-val" id="grossRevRes">R$ 21.000,00</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-name">Fundo Éter (Reinvestimento/Caixa)</span>
+              <span class="metric-val" style="color: var(--warning);" id="reserveRes">R$ 3.150,00</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-name">Pool de Comissões de Vendas</span>
+              <span class="metric-val" style="color: var(--accent-hover);" id="commRes">R$ 2.100,00</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-name">Sobra Líquida Distribuível</span>
+              <span class="metric-val" id="distributableRes">R$ 15.750,00</span>
+            </div>
+            <div class="metric-item" style="margin-top: 8px; padding-top: 14px; border-top: 2px solid var(--border-color);">
+              <span class="metric-name" style="font-weight: 700; color: var(--text-primary);">Repasse Base / Sócio (4 sócios)</span>
+              <span class="metric-val highlight" id="perPartnerRes">R$ 3.937,50</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3 -->
+      <section>
+        <h2>3. Modelo de Negócio, Precificação e Recorrência</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 16px;">
+          Nosso foco comercial será a venda de <strong>Contratos Recorrentes (Fee Mensal)</strong> unindo Audiovisual + Tráfego + Web/Landing Pages, fugindo do modelo de "trabalho pontual / gato pingado".
+        </p>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Nível / Ticket</th>
+                <th>Faixa de Preço</th>
+                <th>Entregas Típicas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Básico (Entrada)</strong></td>
+                <td>R$ 1.500 – R$ 2.500</td>
+                <td>Edição de materiais enviados + Design estático/Carrosséis + Roteiros simples (sem captação presencial).</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Ticket Mínimo (PMEs)</strong></td>
+                <td><strong>R$ 2.500 – R$ 3.500</strong></td>
+                <td>1 diária de captação + 8 a 12 Reels/Shorts + Gestão de Tráfego Pago + Relatórios mensais.</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Ticket Ideal (Crescimento)</strong></td>
+                <td><strong>R$ 4.500 – R$ 6.500</strong></td>
+                <td>Captações quinzenais + Conteúdo completo (Reels/Artes) + Ads Ativos + Landing Page ou manutenção Web contínua.</td>
+              </tr>
+              <tr>
+                <td><strong>Avançado / Enterprise</strong></td>
+                <td>R$ 5.000 – R$ 10.000+</td>
+                <td>Cobertura completa, diárias presenciais ilimitadas/semanais, drone, tráfego avançado e acompanhamento de estúdio.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Formatos de Contratualização</h3>
+        <ul>
+          <li><strong>Retainer Fixo Mensal:</strong> Contratos de 6 a 12 meses com permanência mínima (3 a 6 meses) para estabilizar o caixa.</li>
+          <li><strong>Combo Estratégico (Redes + Tráfego + Web):</strong> Entregar a solução ponta a ponta para aumentar o valor percebido e elevar o ticket médio acima de R$ 4.000/mês.</li>
+          <li><strong>Performance / Variável:</strong> Fee fixo operacional (ex: R$ 2.500) + % sobre investimento em tráfego ou comissão de vendas geradas via Landing Pages.</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 4 -->
+      <section>
+        <h2>4. Meta Operacional da Éter</h2>
+        <p style="color: var(--text-secondary); margin-bottom: 12px;">
+          Para manter a estrutura de 4 sócios bem remunerados, com caixa saudável e sem sobrecarregar a rotina de produção:
+        </p>
+        <ul>
+          <li><strong>Capacidade de Atendimento:</strong> 5 a 8 clientes ativos nos tickets de R$ 3.000 a R$ 4.500/mês.</li>
+          <li><strong>Meta de Faturamento Bruto Inicial:</strong> <span style="color: var(--accent-hover); font-weight: 700;">R$ 18.000 a R$ 28.000 / mês</span>.</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 5 -->
+      <section>
+        <h2>📌 Pauta Prioritária para a Reunião</h2>
+        <ul class="checklist">
+          <li>
+            <input type="checkbox" id="item1">
+            <label for="item1">Debater e definir a % de retenção para o fundo de crescimento e custos operacionais da Éter.</label>
+          </li>
+          <li>
+            <input type="checkbox" id="item2">
+            <label for="item2">Definir a % de comissão/bonificação comercial para quem fechar novos clientes.</label>
+          </li>
+          <li>
+            <input type="checkbox" id="item3">
+            <label for="item3">Alinhar o modelo definitivo de divisão das sobras/lucros entre os 4 sócios.</label>
+          </li>
+          <li>
+            <input type="checkbox" id="item4">
+            <label for="item4">Definir a marca, compra de domínio, criação da nossa Landing Page e montagem do Showreel (Portfólio).</label>
+          </li>
+          <li>
+            <input type="checkbox" id="item5">
+            <label for="item5">Estruturar a compra inicial de armazenamento (SSDs) e licença Adobe para o fluxo de trabalho.</label>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      Éter Creative Experience © 2026 — Documento de Uso Interno
+    </footer>
+  </div>
+
+  <script>
+    const clientsInput = document.getElementById('clientsInput');
+    const ticketInput = document.getElementById('ticketInput');
+    const retentionInput = document.getElementById('retentionInput');
+    const commInput = document.getElementById('commInput');
+
+    const clientsVal = document.getElementById('clientsVal');
+    const ticketVal = document.getElementById('ticketVal');
+    const retentionVal = document.getElementById('retentionVal');
+    const commVal = document.getElementById('commVal');
+
+    const grossRevRes = document.getElementById('grossRevRes');
+    const reserveRes = document.getElementById('reserveRes');
+    const commRes = document.getElementById('commRes');
+    const distributableRes = document.getElementById('distributableRes');
+    const perPartnerRes = document.getElementById('perPartnerRes');
+
+    const fmt = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    function updateSimulator() {
+      const clients = parseInt(clientsInput.value, 10);
+      const ticket = parseFloat(ticketInput.value);
+      const retentionPct = parseFloat(retentionInput.value);
+      const commPct = parseFloat(commInput.value);
+
+      clientsVal.textContent = `${clients} ${clients === 1 ? 'cliente' : 'clientes'}`;
+      ticketVal.textContent = fmt.format(ticket);
+      retentionVal.textContent = `${retentionPct}%`;
+      commVal.textContent = `${commPct}%`;
+
+      const grossRev = clients * ticket;
+      const reserve = grossRev * (retentionPct / 100);
+      const commission = grossRev * (commPct / 100);
+      const distributable = grossRev - reserve - commission;
+      const perPartner = distributable / 4;
+
+      grossRevRes.textContent = fmt.format(grossRev);
+      reserveRes.textContent = fmt.format(reserve);
+      commRes.textContent = fmt.format(commission);
+      distributableRes.textContent = fmt.format(distributable);
+      perPartnerRes.textContent = fmt.format(perPartner);
+    }
+
+    clientsInput.addEventListener('input', updateSimulator);
+    ticketInput.addEventListener('input', updateSimulator);
+    retentionInput.addEventListener('input', updateSimulator);
+    commInput.addEventListener('input', updateSimulator);
+
+    updateSimulator();
+  </script>
+</body>
+</html>
